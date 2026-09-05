@@ -621,3 +621,114 @@ html[data-theme="dark"] .sun { display: none; }
     max-width: 112px;
   }
 }
+
+/* Targeted update: tabular CRM problem illustration */
+.story-flow,
+.story-flow-node,
+.story-flow-arrow,
+.story-flow-outcome {
+  display: none;
+}
+
+.story-table {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 10px;
+}
+
+.story-table-row {
+  display: grid;
+  grid-template-columns: minmax(200px, 1.3fr) minmax(120px, .8fr) minmax(210px, 1.1fr) minmax(160px, .9fr);
+  gap: 12px;
+  align-items: start;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface);
+}
+
+.story-table-header {
+  background: color-mix(in srgb, var(--accent) 10%, var(--surface));
+  border-color: color-mix(in srgb, var(--accent) 22%, var(--line));
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-size: .69rem;
+  font-weight: 900;
+  color: var(--accent-strong);
+}
+
+.story-table-row strong,
+.story-table-row span {
+  min-width: 0;
+}
+
+.story-table-row strong {
+  font-size: .95rem;
+  line-height: 1.35;
+  color: var(--text);
+}
+
+.story-table-row span {
+  font-size: .82rem;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.story-table-row-focus {
+  border-color: transparent;
+  background: var(--dark);
+  box-shadow: 0 14px 32px rgba(0,0,0,.16);
+}
+
+.story-table-row-focus strong,
+.story-table-row-focus span {
+  color: #fff;
+}
+
+.story-table-row-focus span {
+  color: rgba(255,255,255,.8);
+}
+
+.story-table-note {
+  position: relative;
+  z-index: 1;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  color: var(--accent-strong);
+  font-size: .78rem;
+  font-weight: 800;
+}
+
+@media (max-width: 980px) {
+  .story-table {
+    overflow-x: auto;
+    padding-bottom: 6px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+
+  .story-table-row {
+    min-width: 760px;
+  }
+}
+
+@media (max-width: 640px) {
+  .story-table-row {
+    min-width: 720px;
+    padding: 12px 14px;
+  }
+
+  .story-table-row strong {
+    font-size: .9rem;
+  }
+
+  .story-table-row span {
+    font-size: .78rem;
+  }
+
+  .story-table-note {
+    font-size: .74rem;
+  }
+}
