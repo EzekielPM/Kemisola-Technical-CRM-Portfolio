@@ -478,3 +478,146 @@ html[data-theme="dark"] .sun { display: none; }
   .story-flow-node { padding: 16px; }
   .story-flow-outcome { justify-content: flex-start; gap: 7px; }
 }
+
+/* Targeted final refinement: horizontal CRM problem flow + compact contact floater */
+.story-flow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 30px minmax(0, 1fr) 30px minmax(0, 1fr);
+  gap: 10px;
+  align-items: stretch;
+}
+.story-flow-node {
+  min-width: 0;
+  min-height: 235px;
+  align-content: start;
+  padding: 20px;
+  border-top: 3px solid color-mix(in srgb, var(--accent) 72%, transparent);
+}
+.story-flow-node strong {
+  font-size: 1.04rem;
+}
+.story-flow-node span {
+  font-size: .84rem;
+}
+.story-flow-node em {
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px solid color-mix(in srgb, currentColor 14%, transparent);
+}
+.story-flow-node-focus {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 38px rgba(0,0,0,.19);
+}
+.story-flow-arrow {
+  display: grid;
+  place-items: center;
+  align-self: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--line));
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--accent) 10%, var(--surface));
+  font-size: .95rem;
+  font-weight: 900;
+}
+.story-flow-outcome {
+  margin-top: 20px;
+  padding: 17px 14px 0;
+  justify-content: center;
+  gap: 12px;
+  font-size: .73rem;
+  letter-spacing: .01em;
+}
+.story-flow-outcome strong {
+  color: var(--accent-strong);
+  font-weight: 900;
+}
+
+.contact-floater {
+  right: 16px;
+  bottom: 18px;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 999px;
+  box-shadow: 0 9px 26px rgba(0,0,0,.14);
+}
+.contact-floater[data-expanded="true"] {
+  box-shadow: 0 12px 30px rgba(0,0,0,.17);
+}
+.floater-handle {
+  width: 20px;
+  height: 32px;
+  grid-template-columns: repeat(3,2px);
+  gap: 2px;
+}
+.floater-handle span {
+  width: 2px;
+  height: 2px;
+  box-shadow: 0 4px 0 var(--muted), 0 -4px 0 var(--muted);
+}
+.floater-links {
+  gap: 4px;
+}
+.contact-floater[data-expanded="true"] .floater-links {
+  max-width: 112px;
+}
+.contact-floater a,
+.floater-toggle {
+  width: 32px;
+  height: 32px;
+}
+.contact-floater svg {
+  width: 15px;
+  height: 15px;
+}
+
+@media (max-width: 760px) {
+  .story-technical-illustration {
+    overflow: hidden;
+  }
+  .story-flow {
+    grid-template-columns: 245px 28px 245px 28px 245px;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 4px 2px 12px;
+    margin-inline: -2px;
+    scroll-snap-type: x proximity;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+  }
+  .story-flow-node {
+    min-height: 225px;
+    padding: 17px;
+    scroll-snap-align: start;
+  }
+  .story-flow-arrow {
+    width: 28px;
+    height: 28px;
+  }
+  .story-flow-outcome {
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 3px;
+  }
+
+  .contact-floater {
+    right: 12px;
+    bottom: 14px;
+    gap: 4px;
+    padding: 4px;
+  }
+  .floater-handle {
+    width: 20px;
+    height: 32px;
+  }
+  .contact-floater a,
+  .floater-toggle {
+    width: 32px;
+    height: 32px;
+  }
+  .contact-floater[data-expanded="true"] .floater-links {
+    max-width: 112px;
+  }
+}
