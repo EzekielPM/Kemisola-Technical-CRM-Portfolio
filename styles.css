@@ -199,6 +199,12 @@ html[data-theme="dark"] .sun { display: none; }
 .about-kicker { margin: 28px 0 8px; font-size: .86rem; font-weight: 850; color: var(--accent-strong); }
 .about-copy h2 { font-size: clamp(2.5rem, 5vw, 4.55rem); line-height: 1; letter-spacing: -.055em; margin: 0 0 28px; }
 .about-copy > p { color: var(--muted); font-size: 1.03rem; }
+.story-lessons { display: grid; gap: 10px; margin: 30px 0; }
+.story-lessons div { display: grid; gap: 5px; padding: 16px 18px; border: 1px solid var(--line); border-radius: 16px; background: color-mix(in srgb, var(--surface) 72%, transparent); }
+.story-lessons strong { font-size: .9rem; color: var(--text); }
+.story-lessons span { color: var(--muted); font-size: .88rem; line-height: 1.55; }
+.story-track > span b { display: block; margin-top: 2px; font-size: .61rem; color: var(--text); }
+.story-track .career-current b { color: #111; }
 .about-note { margin: 30px 0; border-left: 3px solid var(--accent); padding: 5px 0 5px 20px; }
 .about-note strong { font-size: .8rem; text-transform: uppercase; letter-spacing: .1em; }
 .about-note p { color: var(--muted); margin-bottom: 0; }
@@ -219,23 +225,32 @@ html[data-theme="dark"] .sun { display: none; }
 .contact-links strong { font-size: .96rem; }
 .contact-links i { font-style: normal; font-size: 1.2rem; }
 
-.contact-floater { position: fixed; z-index: 70; right: 20px; bottom: 22px; display: flex; align-items: center; gap: 7px; padding: 7px; border: 1px solid var(--line); border-radius: 999px; background: color-mix(in srgb, var(--surface) 92%, transparent); box-shadow: 0 16px 44px rgba(0,0,0,.18); backdrop-filter: blur(14px); user-select: none; touch-action: none; }
-.floater-handle { width: 34px; height: 42px; border: 0; border-radius: 999px; background: transparent; display: grid; place-content: center; grid-template-columns: repeat(3,3px); gap: 3px; cursor: grab; }
+.contact-floater { position: fixed; z-index: 70; right: 20px; bottom: 22px; display: flex; align-items: center; gap: 7px; padding: 7px; border: 1px solid var(--line); border-radius: 999px; background: color-mix(in srgb, var(--surface) 92%, transparent); box-shadow: 0 16px 44px rgba(0,0,0,.18); backdrop-filter: blur(14px); user-select: none; touch-action: none; transition: box-shadow .2s ease, border-color .2s ease; }
+.contact-floater[data-expanded="true"] { border-color: color-mix(in srgb, var(--accent) 60%, var(--line)); box-shadow: 0 18px 48px rgba(0,0,0,.22); }
+.floater-handle { width: 30px; height: 42px; border: 0; border-radius: 999px; background: transparent; display: grid; place-content: center; grid-template-columns: repeat(3,3px); gap: 3px; cursor: grab; flex: 0 0 auto; }
 .floater-handle:active { cursor: grabbing; }
 .floater-handle span { width: 3px; height: 3px; border-radius: 50%; background: var(--muted); box-shadow: 0 6px 0 var(--muted), 0 -6px 0 var(--muted); }
-.contact-floater a, .footer-contact-icons a { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 50%; transition: transform .2s, background .2s, color .2s; }
-.contact-floater a { background: var(--text); color: var(--bg); }
+.floater-links { display: flex; align-items: center; gap: 7px; max-width: 0; opacity: 0; overflow: hidden; transform: translateX(8px); pointer-events: none; transition: max-width .28s ease, opacity .2s ease, transform .28s ease; }
+.contact-floater[data-expanded="true"] .floater-links { max-width: 160px; opacity: 1; transform: none; pointer-events: auto; }
+.contact-floater a, .footer-contact-icons a, .floater-toggle { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 50%; transition: transform .2s, background .2s, color .2s, border-color .2s; }
+.contact-floater a { background: var(--text); color: var(--bg); flex: 0 0 auto; }
 .contact-floater a:hover { transform: translateY(-2px); background: var(--accent); color: #111; }
+.floater-toggle { border: 0; background: var(--accent); color: #111; cursor: pointer; flex: 0 0 auto; }
+.floater-toggle:hover { transform: translateY(-1px); }
+.floater-toggle svg { transition: transform .24s ease; }
+.contact-floater[data-expanded="true"] .floater-toggle svg { transform: rotate(45deg); }
 .contact-floater svg, .footer-contact-icons svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 
-.site-footer { min-height: 170px; display: grid; grid-template-columns: 1fr auto auto auto; gap: 26px; align-items: center; color: var(--muted); font-size: .78rem; }
-.footer-brand { display: grid; gap: 2px; color: var(--text); }
+.site-footer { min-height: 160px; display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 22px 34px; align-items: center; color: var(--muted); font-size: .78rem; padding-top: 34px; padding-bottom: 34px; }
+.footer-brand { display: grid; gap: 3px; color: var(--text); }
 .footer-brand strong { font-size: .88rem; letter-spacing: .03em; }
 .footer-brand small { color: var(--muted); }
-.footer-contact-icons { display: flex; gap: 6px; }
-.footer-contact-icons a { width: 36px; height: 36px; border: 1px solid var(--line); color: var(--text); }
-.footer-contact-icons a:hover { background: var(--accent); color: #111; border-color: var(--accent); }
-.back-to-top { display: inline-flex; align-items: center; border: 0; background: transparent; color: var(--text); font-weight: 850; cursor: pointer; padding: 10px 0; }
+.footer-actions { display: flex; align-items: center; justify-content: flex-end; gap: 18px; }
+.footer-contact-icons { display: flex; align-items: center; gap: 8px; padding-right: 18px; border-right: 1px solid var(--line); }
+.footer-contact-icons a { width: 38px; height: 38px; border: 1px solid var(--line); color: var(--text); background: var(--surface); }
+.footer-contact-icons a:hover { background: var(--accent); color: #111; border-color: var(--accent); transform: translateY(-2px); }
+.footer-copy { grid-column: 1 / -1; margin: 0; padding-top: 16px; border-top: 1px solid var(--line); }
+.back-to-top { display: inline-flex; align-items: center; border: 0; background: transparent; color: var(--text); font-weight: 850; cursor: pointer; padding: 10px 0; white-space: nowrap; }
 .back-to-top:hover { color: var(--accent-strong); }
 
 .reveal { opacity: 0; transform: translateY(16px); transition: opacity .65s ease, transform .65s ease; }
@@ -268,8 +283,8 @@ html[data-theme="dark"] .sun { display: none; }
   .insights-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .about-grid { grid-template-columns: .8fr 1fr; gap: 45px; }
   .contact-grid { grid-template-columns: 1fr; }
-  .site-footer { grid-template-columns: 1fr auto auto; }
-  .site-footer > p { grid-column: 1 / -1; margin-top: -14px; }
+  .site-footer { grid-template-columns: 1fr auto; }
+  .footer-copy { grid-column: 1 / -1; }
 }
 
 @media (max-width: 820px) and (min-width: 641px) {
@@ -324,12 +339,13 @@ html[data-theme="dark"] .sun { display: none; }
   .about-secondary { transform: translateY(20px); }
   .contact-links a { grid-template-columns: 80px 1fr auto; }
   .contact-floater { right: 12px; bottom: 14px; }
-  .contact-floater a { width: 39px; height: 39px; }
-  .floater-handle { width: 26px; }
-  .site-footer { padding: 36px 0; min-height: 0; grid-template-columns: 1fr auto; gap: 18px; }
-  .footer-contact-icons { grid-row: 2; }
-  .site-footer > p { grid-column: 1 / -1; grid-row: 3; margin: 0; }
-  .back-to-top { grid-column: 2; grid-row: 2; }
+  .contact-floater a, .floater-toggle { width: 39px; height: 39px; }
+  .floater-handle { width: 24px; }
+  .contact-floater[data-expanded="true"] .floater-links { max-width: 145px; }
+  .site-footer { padding: 34px 0; min-height: 0; grid-template-columns: 1fr; gap: 18px; }
+  .footer-actions { justify-content: flex-start; flex-wrap: wrap; gap: 14px; }
+  .footer-contact-icons { padding-right: 14px; }
+  .footer-copy { grid-column: 1; margin: 0; }
 }
 
 @media (max-width: 430px) {
@@ -339,5 +355,6 @@ html[data-theme="dark"] .sun { display: none; }
   .contact-links a { grid-template-columns: 1fr auto; }
   .contact-links span { grid-column: 1 / -1; }
   .contact-floater { gap: 5px; padding: 5px; }
-  .contact-floater a { width: 37px; height: 37px; }
+  .contact-floater a, .floater-toggle { width: 37px; height: 37px; }
+  .footer-actions { width: 100%; justify-content: space-between; }
 }

@@ -69,9 +69,24 @@
 
   const floater = document.querySelector('[data-contact-floater]');
   const floaterHandle = floater?.querySelector('.floater-handle');
+  const floaterToggle = floater?.querySelector('[data-floater-toggle]');
 
   if (floater && floaterHandle) {
     let drag = null;
+
+    function setFloaterExpanded(expanded) {
+      floater.dataset.expanded = String(expanded);
+      floaterToggle?.setAttribute('aria-expanded', String(expanded));
+      floaterToggle?.setAttribute('aria-label', expanded ? 'Close quick contact' : 'Open quick contact');
+      floaterToggle?.setAttribute('title', expanded ? 'Close quick contact' : 'Open quick contact');
+      try { localStorage.setItem('kemisola-contact-floater-expanded', String(expanded)); } catch (_) {}
+    }
+
+    const savedExpanded = localStorage.getItem('kemisola-contact-floater-expanded') === 'true';
+    setFloaterExpanded(savedExpanded);
+    floaterToggle?.addEventListener('click', () => {
+      setFloaterExpanded(floater.dataset.expanded !== 'true');
+    });
 
     const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
