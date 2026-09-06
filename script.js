@@ -147,6 +147,97 @@
     applySavedPosition();
   }
 
+  /* Targeted update: selected-impact wording */
+  const impactIntro = document.querySelector('#impact .section-heading p');
+  if (impactIntro) {
+    impactIntro.textContent = 'I have never walked into a finished CRM department and simply carried on from where someone else stopped. Each time, I had to start with the questions, the gaps and the customer problems in front of me. I learned by building, testing, fixing what did not work and turning those lessons into a CRM function the wider business could depend on. This is now the fourth time I am building a CRM function from the ground up, and each one has taught me something different.';
+  }
+
+  /* Targeted update: clickable 01 / 02 / 03 CRM architecture boxes */
+  const architectureCore = document.querySelector('.architecture-core');
+  const architectureSteps = architectureCore ? Array.from(architectureCore.children).slice(0, 3) : [];
+
+  if (architectureCore && architectureSteps.length) {
+    const interactionStyles = document.createElement('style');
+    interactionStyles.id = 'kemisola-architecture-click-styles';
+    interactionStyles.textContent = `
+      .architecture-core > div {
+        transition: background .22s ease, color .22s ease, border-color .22s ease, box-shadow .22s ease, transform .22s ease;
+      }
+
+      .architecture-core > div[role="button"] {
+        cursor: pointer;
+        outline: none;
+      }
+
+      .architecture-core > div[role="button"]:focus-visible {
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 42%, transparent);
+      }
+
+      .architecture-core.architecture-interactive .core-focus {
+        background: var(--surface);
+        color: var(--text);
+        border-color: var(--line);
+        box-shadow: none;
+      }
+
+      .architecture-core.architecture-interactive .core-focus small {
+        color: var(--accent-strong);
+      }
+
+      .architecture-core.architecture-interactive .core-focus span {
+        color: var(--muted);
+      }
+
+      .architecture-core.architecture-interactive > div.architecture-step-active {
+        background: var(--accent);
+        color: #111;
+        border-color: var(--accent);
+        box-shadow: 0 15px 34px color-mix(in srgb, var(--accent) 22%, transparent);
+        transform: translateY(-2px);
+      }
+
+      .architecture-core.architecture-interactive > div.architecture-step-active small,
+      .architecture-core.architecture-interactive > div.architecture-step-active strong,
+      .architecture-core.architecture-interactive > div.architecture-step-active span {
+        color: #111;
+      }
+
+      .architecture-core.architecture-interactive > div.architecture-step-active strong {
+        font-weight: 950;
+      }
+
+      .architecture-core.architecture-interactive > div.architecture-step-active span {
+        font-weight: 700;
+      }
+    `;
+    document.head.appendChild(interactionStyles);
+
+    const activateArchitectureStep = (selectedStep) => {
+      architectureCore.classList.add('architecture-interactive');
+      architectureSteps.forEach((step) => {
+        const active = step === selectedStep;
+        step.classList.toggle('architecture-step-active', active);
+        step.setAttribute('aria-pressed', String(active));
+      });
+    };
+
+    architectureSteps.forEach((step, index) => {
+      step.setAttribute('role', 'button');
+      step.setAttribute('tabindex', '0');
+      step.setAttribute('aria-pressed', 'false');
+      step.setAttribute('aria-label', `CRM architecture step ${index + 1}: ${step.querySelector('strong')?.textContent || ''}`);
+
+      step.addEventListener('click', () => activateArchitectureStep(step));
+      step.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          activateArchitectureStep(step);
+        }
+      });
+    });
+  }
+
   const observer = 'IntersectionObserver' in window
     ? new IntersectionObserver(entries => {
         entries.forEach(entry => {
